@@ -1,0 +1,56 @@
+C:\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib
+
+라이브러리 추가.
+
+workspace 인코딩 설정 utf-8 설정
+
+Class.forName
+
+DriverManager : 데이터 원본에 JDBC드라이버를 통해서 커넥션을 만드는 역할
+DriverManager 안에 있는 getConnection() 메소드를 통해서 DBMS의 어떤계정에 접속할것일지 정해준다.
+
+DriverManager.getConnection() 의 반환값은 Connection.
+(Connecton에는 내가 연결할 계정에 대한 정보가 들어가있다.)
+
+SQL문장을 실행시키기 전에 우선 Connection 객체가 있어야만 한다.
+
+connection 안에 있는 createStatement() 반환값 : Statement 객체
+connection 안에 있는 prepareStatement() 메소드를 통해서 내가 DB에 쓰고자 하는 쿼리문을 보내
+반환값 : preparedStatement
+
+Statement
+
+Connection객체에 의해 프로그램에 리턴되는 객체에 의해 구현되는 일종의 메소드 집합 정의
+Connection클래스의 createStatement() 메소드를 호출하여 얻어지며 생성된 Statement객체로 
+질의문장을 String객체에 담아 인자로 전달하여 executeQuery() 메소드를 호출하여 SQL 질의 수행
+
+
+createStatement() 완성해서 보낸다.
+prepareStatement() 미완성해서 보낸다.
+
+
+// -- select 한 결과물 resultSet
+executeQuery() - select    /  반환값 :  resultSet ( select 조회결과 resultSet 0개이상의 행들을 )
+executeUpdate() - insert, update,delete  / 반환형 : int
+
+<질의 문장을 String객체에 담아 인자로 전달>
+
+
+? ? 위치홀더
+String query = “INSERT INTO MEMBER VALUES(?, ?)”; 
+pstmt = conn.prepareStatement(query); 
+
+미완성된 쿼리문이기에 그대로 사용하면 에러가나기에 setString으로 쿼리문을 채워준다.
+
+pstmt.setString(1, id); 
+pstmt.setString(2, password); 
+
+첫번쨰 위치홀더에 id,
+두번쨰 위치홀더에 password
+ 
+select * from employee
+
+
+
+
+
