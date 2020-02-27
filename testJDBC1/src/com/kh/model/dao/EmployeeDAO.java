@@ -16,8 +16,8 @@ public class EmployeeDAO {
 	public ArrayList<Employee> selectAll() {
 		
 		Connection conn = null;  // 연결정보를 담은 객체
-		Statement stmt = null;   // Connection 객체를 통해 DB에 SQL문을 전달하여 실행시키고 결과값을 반환 하는 역
-		ResultSet rset = null;   // SELECT ���� ����� ���� ���� �� ��ȯ�Ǵ� ��ü
+		Statement stmt = null;   // Connection 객체를 통해 DB에 SQL문을 전달하여 실행시키고 결과값을 반환 하는 역할
+		ResultSet rset = null;   // SELECT 문을 사용한 질의 성공시 반환되는 객체
 		
 		ArrayList<Employee> empList = null;
 		// ����̹� ����

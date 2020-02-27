@@ -16,7 +16,6 @@ public class MemberController {
 	private MemberService service = new MemberService();
 
 	public void insertMember() {
-
 		Member member = menu.insertMember();
 		int result = service.insertMember(member);
 		if (result > 0) {
@@ -24,21 +23,18 @@ public class MemberController {
 		} else {
 			menu.displayError("데이터 삽입 과정 중 오류 발생");
 		}
-
 	}
 
-	public ArrayList<Member> selectAll() {
+	public void selectAll() {
+		ArrayList<Member> mList = service.selectAll();
 
-		Connection conn = getConnection();
-		MemberDAO mDAO = new MemberDAO();
-
-		ArrayList<Member> mlist = mDAO.selectAll(conn);
-
-		// ArrayList<Member> mList = service.selectAll();
-		menu.displayMember(mlist);
-		return mlist;
+		if (!mList.isEmpty()) {
+			menu.displayMember(mList);
+		} else {
+			menu.displayError("조회 결과가 없습니다.");
+		}
 	}
-
+	
 	public void selectMember() {
 		// 검색 조건의 번호를 반환 받아 저장
 		int sel = menu.selectMember();

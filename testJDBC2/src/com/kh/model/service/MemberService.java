@@ -10,23 +10,29 @@ import com.kh.model.vo.Member;
 
 public class MemberService {
 
-	//private MemberDAO dao = new MemberDAO();
-	
+	// private MemberDAO dao = new MemberDAO();
+
 	public int insertMember(Member member) {
 		Connection conn = getConnection();
-		
+
 		MemberDAO mDAO = new MemberDAO();
 		int result = mDAO.insertMember(conn, member);
-		
-		if(result > 0) {
+
+		if (result > 0) {
 			commit(conn);
-		}else {
+		} else {
 			rollback(conn);
 		}
 		return result;
 	}
 
-	public void selectAll() {	}
+	public ArrayList<Member> selectAll() {
+
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		ArrayList<Member> mList = mDAO.selectAll(conn);
+		return mList;
+	}
 
 	public ArrayList<Member> selectMemberId(String id) {
 		Connection conn = getConnection();
@@ -39,7 +45,7 @@ public class MemberService {
 		Connection conn = getConnection();
 		MemberDAO mDAO = new MemberDAO();
 		ArrayList<Member> mList = mDAO.selectGender(conn, gender);
-		
+
 		return mList;
 	}
 }
