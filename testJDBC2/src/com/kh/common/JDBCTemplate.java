@@ -35,6 +35,7 @@ public class JDBCTemplate {
 												   prop.getProperty("user"),
 												   prop.getProperty("password"));
 				
+				
 				// 자동으로 커밋하는것을 막겠다.
 				// why? : 우리가 트랜잭션을 하는것을 개발자가 이럴떄 커밋하고 롤백할겁니다 해야하는데
 				// true라고 해놓으면 
@@ -50,7 +51,6 @@ public class JDBCTemplate {
 				e.printStackTrace();
 			}
 		}
-		
 		return conn;
 	}
 	

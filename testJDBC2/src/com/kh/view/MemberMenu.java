@@ -36,15 +36,9 @@ public class MemberMenu {
 			menuNum = Integer.parseInt(sc.nextLine());
 
 			switch (menuNum) {
-			case 1:
-				mc.insertMember();
-				break;
-			case 2:
-				mc.selectAll();
-				break;
-			case 3:
-				mc.selectMember();
-				break;
+			case 1:	mc.insertMember();	break;
+			case 2:	mc.selectAll();		break;
+			case 3:	mc.selectMember();	break;
 			case 4:
 				break;
 			case 5:
