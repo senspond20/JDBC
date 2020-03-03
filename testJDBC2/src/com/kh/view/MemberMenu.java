@@ -39,7 +39,7 @@ public class MemberMenu {
 			case 1:	mc.insertMember();	break;
 			case 2:	mc.selectAll();		break;
 			case 3:	mc.selectMember();	break;
-			case 4:
+			case 4: mc.updateMember();
 				break;
 			case 5:
 				break;
@@ -123,10 +123,27 @@ public class MemberMenu {
 		String id = sc.nextLine();
 		return id;
 	}
+	
+	public String inputMemberPw() {
+		System.out.print("회원 비밀번호 : ");
+		String pw = sc.nextLine();
+		return pw;
+	}
+	
 	public char inputGender() {
 		System.out.print("조회할 성별 입력(남: M / 여: F) : ");
 		char gen = sc.nextLine().toUpperCase().charAt(0);
 		return gen;
+	}
+
+	public String checkMemberId() {
+	
+		return null;
+	}
+
+	public String checkMemberPw() {
+		
+		return null;
 	}
 
 }

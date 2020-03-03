@@ -40,7 +40,7 @@ public class MemberDAO {
 		 */
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		// 쿼리도 프로퍼티 파일로 분리해서 만들기도 한다.
 		String query = prop.getProperty("insertMember");
 
@@ -54,13 +54,13 @@ public class MemberDAO {
 			pstmt.setString(6, member.getEmail());
 			pstmt.setString(7, member.getPhone());
 			pstmt.setInt(8, member.getAge());
-			
+
 			result = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);	
+			close(pstmt);
 		}
 		return result;
 	}
@@ -69,17 +69,17 @@ public class MemberDAO {
 		Statement stmt = null;
 		ArrayList<Member> mList = null;
 		ResultSet rset = null;
-		
+
 		String query = prop.getProperty("selectAll");
-		
+
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
 			mList = new ArrayList<Member>();
 			Member member = null;
-			
-			// 무조건 컬럼명이 아니라... 
-			while(rset.next()) {
+
+			// 무조건 컬럼명이 아니라...
+			while (rset.next()) {
 				String memberId = rset.getString("member_id");
 				String memberPwd = rset.getString("member_pwd");
 				String memberName = rset.getString("member_name");
@@ -89,7 +89,7 @@ public class MemberDAO {
 				int age = rset.getInt("age");
 				String address = rset.getString("address");
 				Date enrollDate = rset.getDate("enroll_date");
-				
+
 				member = new Member(memberId, memberPwd, memberName, gender, email, phone, age, address, enrollDate);
 				mList.add(member);
 			}
@@ -100,7 +100,7 @@ public class MemberDAO {
 			close(rset);
 			close(stmt);
 		}
-		
+
 		return mList;
 	}
 
@@ -109,16 +109,16 @@ public class MemberDAO {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<Member> mList = null;
-		
+
 		String query = prop.getProperty("selectMemberId");
-		// SELECT * FROM MEMBER WHERE MEMBER_ID LIKE 
+		// SELECT * FROM MEMBER WHERE MEMBER_ID LIKE
 		try {
 			stmt = conn.createStatement();
-			query += " '%" + id + "%'";   //  LIKE '%id%'
+			query += " '%" + id + "%'"; // LIKE '%id%'
 			rset = stmt.executeQuery(query);
 			mList = new ArrayList<Member>();
-			
-			while(rset.next()) {
+
+			while (rset.next()) {
 				String memberId = rset.getString("member_id");
 				String memberPwd = rset.getString("member_pwd");
 				String memberName = rset.getString("member_name");
@@ -128,9 +128,9 @@ public class MemberDAO {
 				int age = rset.getInt("age");
 				String address = rset.getString("address");
 				Date enrollDate = rset.getDate("enroll_date");
-				
-				Member member = new Member(memberId, memberPwd, memberName, 
-						                   gender,email, phone, age, address, enrollDate);
+
+				Member member = new Member(memberId, memberPwd, memberName, gender, email, phone, age, address,
+						enrollDate);
 				mList.add(member);
 			}
 		} catch (SQLException e) {
@@ -139,7 +139,7 @@ public class MemberDAO {
 			close(rset);
 			close(stmt);
 		}
-		
+
 		return mList;
 	}
 
@@ -148,17 +148,17 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Member> mList = null;
-		
+
 		String query = prop.getProperty("selectGender");
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, gender+"");
+			pstmt.setString(1, gender + "");
 			rset = pstmt.executeQuery();
 
 			mList = new ArrayList<Member>();
-			
-			while(rset.next()) {
+
+			while (rset.next()) {
 				String memberId = rset.getString("member_id");
 				String memberPwd = rset.getString("member_pwd");
 				String memberName = rset.getString("member_name");
@@ -168,19 +168,45 @@ public class MemberDAO {
 				int age = rset.getInt("age");
 				String address = rset.getString("address");
 				Date enrollDate = rset.getDate("enroll_date");
-				
-				Member member = new Member(memberId, memberPwd, memberName, 
-						                   gen,email, phone, age, address, enrollDate);
+
+				Member member = new Member(memberId, memberPwd, memberName, gen, email, phone, age, address,
+						enrollDate);
 				mList.add(member);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
+
 		return mList;
+
+	}
+
+	// 
+	public boolean checkMemberId(Connection conn, String id) {
+
+		ResultSet rs = null;
+		Statement stmt = null;
 		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM MEMBER WHERE MEMBER_ID = id");
+			
+			while(rs.next()) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rs);
+			close(conn);
+		}
+		
+		return false;
+
 	}
 }

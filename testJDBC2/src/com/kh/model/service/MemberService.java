@@ -48,4 +48,14 @@ public class MemberService {
 
 		return mList;
 	}
+	public boolean checkMemberId(String id) {
+
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		boolean bool = mDAO.checkMemberId(conn, id);
+
+		return bool;
+
+	}
+	
 }

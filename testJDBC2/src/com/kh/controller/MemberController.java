@@ -60,4 +60,12 @@ public class MemberController {
 		}
 	}
 
+	public void updateMember() {
+		
+		String id = menu.inputMemberId();
+		String pw = menu.inputMemberPw();
+		
+		
+	}
+
 }
