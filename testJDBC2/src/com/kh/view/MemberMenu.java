@@ -137,7 +137,6 @@ public class MemberMenu {
 	}
 
 	public String checkMemberId() {
-	
 		return null;
 	}
 
