@@ -41,7 +41,7 @@ public class MemberMenu {
 			case 3:	mc.selectMember();	break;
 			case 4: mc.updateMember();
 				break;
-			case 5:
+			case 5: mc.deleteMember();
 				break;
 			case 0:
 				System.out.println("프로그램을 종료합니다. ");
@@ -136,13 +136,12 @@ public class MemberMenu {
 		return gen;
 	}
 
-	public String checkMemberId() {
-		return null;
-	}
+	public Member updateMember() {
 
-	public String checkMemberPw() {
-		
-		return null;
+		System.out.println("*** 회원 정보 수정 ***");
+		Member member = insertMember();
+		return member;
+
 	}
 
 }

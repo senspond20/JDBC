@@ -184,29 +184,161 @@ public class MemberDAO {
 
 	}
 
-	// 
+	//
 	public boolean checkMemberId(Connection conn, String id) {
 
-		ResultSet rs = null;
-		Statement stmt = null;
-		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("checkMemberId");
+
 		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM MEMBER WHERE MEMBER_ID = id");
-			
-			while(rs.next()) {
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			rset = pstmt.executeQuery();
+
+			if (rset.next() && rset.getString("member_id").equals(id)) {
 				return true;
 			}
-			
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			close(rset);
+			close(pstmt);
+
+		}
+
+		return false;
+//		
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String query = "SELECT * FROM MEMBER WHERE MEMBER_ID = ?";
+//
+//		try {
+//			pstmt = conn.prepareStatement(query);
+//			
+//			pstmt.setString(1, id);
+//			rs = pstmt.executeQuery();
+//		//	rs = stmt.executeQuery("SELECT * FROM MEMBER WHERE MEMBER_ID=" + id);
+////
+////			while (rs.next()) {
+//				if (rs.next() && rs.getString("MEMBER_ID").equals(id)) {
+//					
+//					return true;
+//				}
+//		//	}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(rs);
+//			close(pstmt);
+//			
+//		//	close(conn);
+//		}
+//
+//		return false;
+
+//		Statement stmt = null;
+//		ResultSet rs = null;
+//		String query = "SELECT * FROM MEMBER WHERE MEMBER_ID='" + id + "'";
+//
+//		try {
+//			stmt = conn.createStatement();
+//			
+//			rs = stmt.executeQuery(query);
+////
+////			while (rs.next()) {
+//				if (rs.next() && rs.getString("MEMBER_ID").equals(id)) {
+//					
+//					return true;
+//				}
+//		//	}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(rs);
+//			close(stmt);
+//			
+//		//	close(conn);
+//		}
+//
+//		return false;
+
+	}
+
+	public boolean checkMemberPw(Connection conn, String pw) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("checkMemberPw");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, pw);
+			rset = pstmt.executeQuery();
+
+			if (rset.next() && rset.getString("MEMBER_PWD").equals(pw)) {
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt);
-			close(rs);
-			close(conn);
+			close(rset);
+			close(pstmt);
 		}
-		
 		return false;
+	}
+
+	public int updateMember(Connection conn, String id, Member member) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateMember");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getMemberPwd());
+			pstmt.setString(3, member.getMemberName());
+			pstmt.setString(4, member.getGender() + "");
+			pstmt.setString(5, member.getEmail());
+			pstmt.setString(6, member.getPhone());
+			pstmt.setInt(7, member.getAge());
+			pstmt.setString(8, member.getAddress());
+			pstmt.setString(9, id);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int deleteMember(Connection conn, String id, String pwd) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteMember");
+		
+		//String query = "DELETE FROM MEMBER WHERE MEMBER_ID = ? AND MEMBER_PWD = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
 
 	}
 }

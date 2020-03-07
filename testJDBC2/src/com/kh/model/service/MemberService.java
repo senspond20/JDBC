@@ -14,10 +14,9 @@ public class MemberService {
 
 	public int insertMember(Member member) {
 		Connection conn = getConnection();
-
 		MemberDAO mDAO = new MemberDAO();
 		int result = mDAO.insertMember(conn, member);
-
+		
 		if (result > 0) {
 			commit(conn);
 		} else {
@@ -53,9 +52,40 @@ public class MemberService {
 		Connection conn = getConnection();
 		MemberDAO mDAO = new MemberDAO();
 		boolean bool = mDAO.checkMemberId(conn, id);
-
 		return bool;
+	}
+
+	public boolean checkMemberPw(String pw) {
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		boolean bool = mDAO.checkMemberPw(conn, pw);
+		return bool;
+		
+	}
+
+	public int updateMember(String id, Member member) {
+
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		int result = mDAO.updateMember(conn, id, member);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		return result;
 
 	}
+
+	public int deleteMember(String id, String pwd) {
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		int result = mDAO.deleteMember(conn, id, pwd);
+
+		return result;
+
+	}
+
 	
 }
