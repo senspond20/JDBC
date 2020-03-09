@@ -47,24 +47,9 @@ public class MemberService {
 
 		return mList;
 	}
-	public boolean checkMemberId(String id) {
-
-		Connection conn = getConnection();
-		MemberDAO mDAO = new MemberDAO();
-		boolean bool = mDAO.checkMemberId(conn, id);
-		return bool;
-	}
-
-	public boolean checkMemberPw(String pw) {
-		Connection conn = getConnection();
-		MemberDAO mDAO = new MemberDAO();
-		boolean bool = mDAO.checkMemberPw(conn, pw);
-		return bool;
-		
-	}
+	
 
 	public int updateMember(String id, Member member) {
-
 		Connection conn = getConnection();
 		MemberDAO mDAO = new MemberDAO();
 		int result = mDAO.updateMember(conn, id, member);
@@ -82,9 +67,47 @@ public class MemberService {
 		Connection conn = getConnection();
 		MemberDAO mDAO = new MemberDAO();
 		int result = mDAO.deleteMember(conn, id, pwd);
-
 		return result;
+	}
 
+	public boolean checkMemberId(String id) {
+
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		boolean bool = mDAO.checkMemberId(conn, id);
+		return bool;
+	}
+
+	public boolean checkMemberPw(String pw) {
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		boolean bool = mDAO.checkMemberPw(conn, pw);
+		return bool;
+		
+	}
+	
+	// DB가 받아오는 커넥션 연결
+	// 트랙잭션 관리, 자원반납
+	public int checkMember(String memberId) {
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		int check = mDAO.checkMember(conn, memberId);
+		return check;
+	}
+
+	public int updateMember(String memberId, int sel, String input) {
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		
+		int result = mDAO.updateMember(conn, memberId, sel,input);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result;
 	}
 
 	

@@ -80,6 +80,8 @@ public class MemberDAO {
 
 			// 무조건 컬럼명이 아니라...
 			while (rset.next()) {
+				
+				//columnLabel
 				String memberId = rset.getString("member_id");
 				String memberPwd = rset.getString("member_pwd");
 				String memberName = rset.getString("member_name");
@@ -340,5 +342,61 @@ public class MemberDAO {
 
 		return result;
 
+	}
+
+	public int checkMember(Connection conn, String memberId) {
+		// select ~~ from member where member_id = ?
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int check = 0;
+		
+		String query = prop.getProperty("checkMember");
+		//checkMember = SELECT COUNT(*) FROM MEMBER WHERE_ID = ?
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			
+			rset = pstmt.executeQuery();
+			// 1 or 0
+			
+			if(rset.next()) {
+				// resultset의 컬럼명을 직접쓰거나
+				// (index 순서가 바뀌어도 정확하게 나오게하고 싶을때)
+				//check = rset.getInt("COUNT(*)");
+		
+				// 컬럼의 Index 위치를 쓰거나
+				check = rset.getInt(1);	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return check;
+	}
+
+	public int updateMember(Connection conn, String memberId, int sel, String input) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMember" + sel);
+		// 비밀번호 : updateMember1
+		// 이메일 : updateMember2
+		// 전화번호 : updateMember3
+		// 주소	 :  updateMember4
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, input);
+			pstmt.setString(2, memberId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }

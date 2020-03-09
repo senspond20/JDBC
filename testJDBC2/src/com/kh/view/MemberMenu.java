@@ -14,12 +14,7 @@ public class MemberMenu {
 		MemberController mc = new MemberController();
 
 		/*
-		 * *** 회원 관리 프로그램 *** 
-		 * 1. 새 회원 등록 
-		 * 2. 모든 회원 조회 
-		 * 3. 특정 조건 회원 조회 
-		 * 4. 회원 정보 수정 
-		 * 5. 회원 탈퇴
+		 * *** 회원 관리 프로그램 *** 1. 새 회원 등록 2. 모든 회원 조회 3. 특정 조건 회원 조회 4. 회원 정보 수정 5. 회원 탈퇴
 		 * 0. 프로그램 종료 번호 선택 :
 		 */
 		int menuNum = 0;
@@ -36,12 +31,20 @@ public class MemberMenu {
 			menuNum = Integer.parseInt(sc.nextLine());
 
 			switch (menuNum) {
-			case 1:	mc.insertMember();	break;
-			case 2:	mc.selectAll();		break;
-			case 3:	mc.selectMember();	break;
-			case 4: mc.updateMember();
+			case 1:
+				mc.insertMember();
 				break;
-			case 5: mc.deleteMember();
+			case 2:
+				mc.selectAll();
+				break;
+			case 3:
+				mc.selectMember();
+				break;
+			case 4:
+				mc.updateMember();
+				break;
+			case 5:
+				mc.deleteMember();
 				break;
 			case 0:
 				System.out.println("프로그램을 종료합니다. ");
@@ -123,25 +126,49 @@ public class MemberMenu {
 		String id = sc.nextLine();
 		return id;
 	}
-	
+
 	public String inputMemberPw() {
 		System.out.print("회원 비밀번호 : ");
 		String pw = sc.nextLine();
 		return pw;
 	}
-	
+
 	public char inputGender() {
 		System.out.print("조회할 성별 입력(남: M / 여: F) : ");
 		char gen = sc.nextLine().toUpperCase().charAt(0);
 		return gen;
 	}
 
-	public Member updateMember() {
+	public int updateMember() {
 
-		System.out.println("*** 회원 정보 수정 ***");
-		Member member = insertMember();
-		return member;
+		System.out.println("\n*** ID가 확인되었습니다. *** \n");
+		// System.out.println("*** 회원 정보 수정 ***");
 
+		int sel = 0;
+		while (true) {
+			System.out.println("1. 비밀번호 변경");
+			System.out.println("2. 이메일 변경");
+			System.out.println("3. 전화번호 변경");
+			System.out.println("4. 주소 변경");
+			System.out.println("0. 메인 메뉴로 돌아가기");
+			System.out.print("번호 선택 : ");
+			sel = Integer.parseInt(sc.nextLine());
+
+			switch (sel) {
+			case 1:	case 2: case 3: case 4: case 0: return sel;
+			default:
+				System.out.println("잘못 입력하셨습니다. 다시 입력해주세요");
+			}
+		}
+	}
+//		Member member = insertMember();
+//		return member;
+
+	public String inputUpdate() {
+		System.out.print("수정 값 입력 : ");
+		String input = sc.nextLine();
+		
+		return input;
 	}
 
 }
