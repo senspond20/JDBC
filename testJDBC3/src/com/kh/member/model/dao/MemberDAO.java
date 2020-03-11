@@ -7,9 +7,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import static com.kh.common.JDBCTemplate.close;
+
+import com.kh.board.model.vo.Board;
 import com.kh.member.model.vo.Member;
 
 public class MemberDAO {
@@ -53,6 +56,7 @@ public class MemberDAO {
 		return result;
 		
 	}
+
 	
 	
 	
