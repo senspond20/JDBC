@@ -15,6 +15,7 @@ public class BoardController {
 	
 	public void selectAll() {
 		ArrayList<Board> bList = bs.selectAll();
+		
 		if (!bList.isEmpty()) {
 			view.selectAll(bList);
 		} else {
